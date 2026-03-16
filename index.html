@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CIMPA FoRT | Framework</title>
+  <style>
+    :root {
+      --green-dark: #123c32;
+      --green: #1f5f4a;
+      --orange: #d66a12;
+      --cream: #f8f6ef;
+      --white: #ffffff;
+      --text: #22302b;
+      --muted: #5c6b65;
+      --border: #e3d8c4;
+      --shadow: 0 12px 30px rgba(18, 60, 50, 0.08);
+      --radius: 18px;
+      --max: 1120px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(248, 246, 239, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .topbar-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 14px 0;
+    }
+
+    .brand small {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--green);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .brand strong { font-size: 18px; }
+
+    .nav {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .nav a:hover,
+    .nav a.active {
+      color: var(--orange);
+      font-weight: 700;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 55%, var(--orange) 150%);
+      color: var(--white);
+      padding: 72px 0 58px;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.08);
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.08;
+      max-width: 900px;
+    }
+
+    .hero p {
+      max-width: 760px;
+      color: rgba(255,255,255,0.9);
+      font-size: 18px;
+      margin: 18px 0 0;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.08);
+      color: var(--white);
+      font-size: 14px;
+      transition: 0.2s ease;
+      cursor: pointer;
+    }
+
+    .button.primary {
+      background: var(--white);
+      color: var(--green-dark);
+      border-color: var(--white);
+      font-weight: 700;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.14);
+    }
+
+    .button.primary:hover { background: #f2eee3; }
+
+    .section { padding: 64px 0; }
+
+    .section-title small {
+      display: block;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1.15;
+    }
+
+    .section-title p {
+      max-width: 760px;
+      color: var(--muted);
+      margin-top: 14px;
+    }
+
+    .quick-grid,
+    .lecture-grid,
+    .committee-grid,
+    .sponsor-grid {
+      display: grid;
+      gap: 22px;
+      margin-top: 30px;
+    }
+
+    .quick-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .lecture-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .committee-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .sponsor-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 36px rgba(18, 60, 50, 0.12);
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.25;
+      color: var(--green-dark);
+    }
+
+    .speaker {
+      margin-top: 14px;
+      font-weight: 700;
+      font-size: 17px;
+    }
+
+    .affiliation,
+    .email,
+    .meta,
+    .coming-soon {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .tag {
+      display: inline-block;
+      margin-top: 16px;
+      border-radius: 999px;
+      border: 1px solid #eadbc3;
+      background: #fbf7ef;
+      color: var(--orange);
+      padding: 7px 12px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+
+    .toggle {
+      margin-top: 18px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border: 1px solid var(--border);
+      background: #fcfaf5;
+      color: var(--green-dark);
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .toggle:hover {
+      background: #f8f2e7;
+    }
+
+    .toggle .icon {
+      font-size: 18px;
+      line-height: 1;
+      transition: transform 0.2s ease;
+    }
+
+    .abstract-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .abstract-panel.open {
+      max-height: 420px;
+    }
+
+    .abstract-inner {
+      padding-top: 14px;
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .framework-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 22px;
+      margin-top: 30px;
+    }
+
+    .framework-list,
+    .person-list {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .framework-list li,
+    .person-list li { margin: 10px 0; }
+
+    .person-list li strong {
+      color: var(--green-dark);
+    }
+
+    .committee-card h3,
+    .sponsor-card h3 {
+      font-size: 22px;
+    }
+
+    .footer {
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      padding: 42px 0;
+    }
+
+    .footer p {
+      margin: 6px 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 980px) {
+      .framework-grid,
+      .quick-grid,
+      .lecture-grid,
+      .committee-grid,
+      .sponsor-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav {
+        gap: 12px;
+        font-size: 13px;
+      }
+
+      .hero {
+        padding-top: 54px;
+      }
+
+      .section {
+        padding: 52px 0;
+      }
+
+      .card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <small>CIMPA School</small>
+        <strong>Flavors of Representation Theory</strong>
+      </div>
+      <nav class="nav">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#lectures">Lectures</a>
+        <a href="#committees">Committees</a>
+        <a href="#sponsors">Sponsors</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <section id="home" class="hero">
+    <div class="container">
+      <div class="pill">North-Eastern Hill University, Shillong</div>
+      <h1>Basic website framework for the CIMPA FoRT school</h1>
+      <p>
+        This version keeps the site intentionally lean: a landing section, an about section,
+        a lectures section, committee details, sponsor placeholders, and contact details.
+        Abstracts are hidden by default and open only when clicked.
+      </p>
+      <div class="hero-actions">
+        <a class="button primary" href="#about">Explore framework</a>
+        <a class="button" href="#lectures">View lectures</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="section">
+    <div class="container">
+      <div class="section-title">
+        <small>About</small>
+        <h2>Current structure of the website</h2>
+        <p>
+          For now, the site is reduced to the essential academic skeleton. More detailed sections such as schedule,
+          registration, travel, accommodation, and organisers can be expanded later without rebuilding the layout.
+        </p>
+      </div>
+
+      <div class="quick-grid">
+        <article class="card">
+          <h3>Landing page</h3>
+          <p class="coming-soon">A clean entry section introducing the school and directing visitors to the key pages.</p>
+        </article>
+        <article class="card">
+          <h3>About page</h3>
+          <p class="coming-soon">A short overview of the school, its academic theme, and the present framework of the site.</p>
+        </article>
+        <article class="card">
+          <h3>Lectures page</h3>
+          <p class="coming-soon">Speaker cards with affiliations and click-to-open abstracts, keeping the page compact.</p>
+        </article>
+      </div>
+
+      <div class="framework-grid">
+        <article class="card">
+          <h3>What is included now</h3>
+          <ul class="framework-list">
+            <li>Home section with a concise introduction.</li>
+            <li>About section explaining the basic structure of the site.</li>
+            <li>Lecture cards with speaker details.</li>
+            <li>Expandable abstract panels for cleaner browsing.</li>
+            <li>Organising, scientific, and local committees.</li>
+            <li>Sponsors section at the end.</li>
+            <li>Simple contact block at the bottom.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>What can be added later</h3>
+          <ul class="framework-list">
+            <li>Registration and application links.</li>
+            <li>Detailed timetable and daily schedule.</li>
+            <li>Travel and accommodation information.</li>
+            <li>Organizing committee and partners.</li>
+            <li>Downloads, posters, and announcements.</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="lectures" class="section">
+    <div class="container">
+      <div class="section-title">
+        <small>Lectures</small>
+        <h2>Teaching team and talk abstracts</h2>
+        <p>
+          Click on any lecture card to open or close the abstract.
+        </p>
+      </div>
+
+      <div class="lecture-grid">
+        <article class="card lecture-card">
+          <h3>Cluster structures on flag varieties and applications in particle physics</h3>
+          <div class="speaker">Lara Bossinger</div>
+          <div class="affiliation">Universidad Nacional Autónoma de México (UNAM)</div>
+          <div class="email">lara@im.unam.mx</div>
+          <div class="meta">Lecture series · 5h</div>
+          <button class="toggle" type="button" aria-expanded="false">
+            <span>Show abstract</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="abstract-panel">
+            <div class="abstract-inner">
+              These lectures cover total positivity, an introduction to cluster algebras,
+              cluster structures on partial flag varieties, realizations of configuration
+              spaces in quantum field theory as partial flag varieties, and applications of
+              cluster structures to scattering amplitudes.
+            </div>
+          </div>
+          <div class="tag">Introductory course</div>
+        </article>
+
+        <article class="card lecture-card">
+          <h3>Infinite-dimensional Lie algebras and their representations: an introduction through examples</h3>
+          <div class="speaker">Samuel Lopes</div>
+          <div class="affiliation">University of Porto</div>
+          <div class="email">slopes@fc.up.pt</div>
+          <div class="meta">Lecture series · 5h</div>
+          <button class="toggle" type="button" aria-expanded="false">
+            <span>Show abstract</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="abstract-panel">
+            <div class="abstract-inner">
+              This course introduces structural features and aspects of the representation
+              theory of infinite-dimensional Lie algebras through examples such as the
+              Heisenberg Lie algebra, the Virasoro Lie algebra, Bosonic Fock space,
+              the Boson-Fermion correspondence, and Lie algebras of infinite matrices
+              including gl(infinity) and sl(infinity).
+            </div>
+          </div>
+          <div class="tag">Introductory course</div>
+        </article>
+
+        <article class="card lecture-card">
+          <h3>Homological methods in Representation Theory</h3>
+          <div class="speaker">Andrea Solotar</div>
+          <div class="affiliation">University of Buenos Aires</div>
+          <div class="email">asolotar@dm.uba.ar</div>
+          <div class="meta">Lecture series · 5h</div>
+          <button class="toggle" type="button" aria-expanded="false">
+            <span>Show abstract</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="abstract-panel">
+            <div class="abstract-inner">
+              This course presents recent progress on Han's conjecture and introduces
+              homological tools such as Hochschild cohomology and homology, global
+              dimension, and triangulated and derived categories. It also discusses newer
+              methods used in this area, in particular tau-Hochschild cohomology.
+            </div>
+          </div>
+          <div class="tag">Introductory course</div>
+        </article>
+
+        <article class="card lecture-card">
+          <h3>Representation theory for combinatorial algebras</h3>
+          <div class="speaker">Roozbeh Hazrat</div>
+          <div class="affiliation">Western Sydney University</div>
+          <div class="email">r.hazrat@westernsydney.edu.au</div>
+          <div class="meta">Lecture series · 5h</div>
+          <button class="toggle" type="button" aria-expanded="false">
+            <span>Show abstract</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="abstract-panel">
+            <div class="abstract-inner">
+              The lectures focus on representation theory for combinatorial algebras arising
+              from graph-type constructions, especially higher-rank graph analogues of
+              Leavitt path algebras, together with their irreducible representations and
+              links with symbolic dynamics.
+            </div>
+          </div>
+          <div class="tag">Introductory course</div>
+        </article>
+
+        <article class="card lecture-card">
+          <h3>Representation theory and knots</h3>
+          <div class="speaker">Véronique Bazier-Matte</div>
+          <div class="affiliation">Université Laval</div>
+          <div class="email">veronique.bazier-matte.1@ulaval.ca</div>
+          <div class="meta">Lecture series · 5h</div>
+          <button class="toggle" type="button" aria-expanded="false">
+            <span>Show abstract</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="abstract-panel">
+            <div class="abstract-inner">
+              This course studies a connection between knot theory and cluster algebras via
+              representation theory. It explains how knot and link diagrams give rise to
+              cluster structures, relates these to Alexander polynomials and Kauffman states,
+              and examines compatible cluster variables and symmetry phenomena.
+            </div>
+          </div>
+          <div class="tag">Advanced course</div>
+        </article>
+
+        <article class="card lecture-card">
+          <h3>Functor-category-theoretic methods in representation theory</h3>
+          <div class="speaker">Amit Kuber</div>
+          <div class="affiliation">Indian Institute of Technology Kanpur</div>
+          <div class="email">askuber@iitk.ac.in</div>
+          <div class="meta">Lecture series · 5h</div>
+          <button class="toggle" type="button" aria-expanded="false">
+            <span>Show abstract</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="abstract-panel">
+            <div class="abstract-inner">
+              This course gives a gentle introduction to functor categories and their use in
+              the representation theory of bound quivers. Topics include algebraically compact
+              modules, Serre localisation, Krull-Gabriel dimension, duality, Ziegler spectrum,
+              and definable categories.
+            </div>
+          </div>
+          <div class="tag">Advanced course</div>
+        </article>
+
+        <article class="card lecture-card">
+          <h3>Representation Theory of Groups</h3>
+          <div class="speaker">Pooja Singla</div>
+          <div class="affiliation">Indian Institute of Technology Kanpur</div>
+          <div class="email">psingla@iitk.ac.in</div>
+          <div class="meta">Lecture series · 5h</div>
+          <button class="toggle" type="button" aria-expanded="false">
+            <span>Show abstract</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="abstract-panel">
+            <div class="abstract-inner">
+              These lectures begin with representations, group algebras, irreducibility,
+              character theory, induction, restriction, Mackey theory, and Clifford theory.
+              They then move to irreducible representations of GLn(Fq), including cuspidal
+              and principal series representations, and finally to smooth admissible
+              representations over p-adic fields, parabolic induction, and the Bernstein decomposition.
+            </div>
+          </div>
+          <div class="tag">Advanced course</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="committees" class="section">
+    <div class="container">
+      <div class="section-title">
+        <small>Committees</small>
+        <h2>Organisational structure</h2>
+        <p>
+          These blocks can be filled out as names are finalized. For now, they provide the right public-facing structure.
+        </p>
+      </div>
+
+      <div class="committee-grid">
+        <article class="card committee-card">
+          <h3>Organising Committee</h3>
+          <ul class="person-list">
+            <li><strong>Ardeline Mary Buhphang</strong> — North-Eastern Hill University</li>
+            <li><strong>Stéphane Launois</strong> — University of Caen Normandie</li>
+            <li><strong>Rishabh Goswami</strong> — North-Eastern Hill University</li>
+            <li><strong>Alfilgen Sebandal</strong> — Research Center for Theoretical Physics, Jagna</li>
+          </ul>
+        </article>
+
+        <article class="card committee-card">
+          <h3>Scientific Committee</h3>
+          <ul class="person-list">
+            <li><strong>To be updated</strong> — Chair / coordinator</li>
+            <li><strong>To be updated</strong> — International member</li>
+            <li><strong>To be updated</strong> — National member</li>
+            <li><strong>To be updated</strong> — Advisory member</li>
+          </ul>
+        </article>
+
+        <article class="card committee-card">
+          <h3>Local Organising Committee</h3>
+          <ul class="person-list">
+            <li><strong>To be updated</strong> — Department of Mathematics, NEHU</li>
+            <li><strong>To be updated</strong> — Logistics and hospitality</li>
+            <li><strong>To be updated</strong> — Student coordination</li>
+            <li><strong>To be updated</strong> — Venue and local support</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="sponsors" class="section">
+    <div class="container">
+      <div class="section-title">
+        <small>Sponsors</small>
+        <h2>Funding and institutional support</h2>
+        <p>
+          Keep this section at the end for funding acknowledgements and partner visibility. Logos and links can be added once confirmed.
+        </p>
+      </div>
+
+      <div class="sponsor-grid">
+        <article class="card sponsor-card">
+          <h3>Primary sponsor</h3>
+          <p class="coming-soon">CIMPA</p>
+        </article>
+        <article class="card sponsor-card">
+          <h3>Host institution</h3>
+          <p class="coming-soon">North-Eastern Hill University, Shillong</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact" class="footer">
+    <div class="container">
+      <div class="section-title">
+        <small>Contact</small>
+        <h2 style="font-size: 30px;">Current contact block</h2>
+      </div>
+      <p>North-Eastern Hill University, Shillong</p>
+      <p>CIMPA School: Flavors of Representation Theory</p>
+      <p>More organiser and logistics details can be added here later.</p>
+    </div>
+  </footer>
+
+  <script>
+    const toggles = document.querySelectorAll('.toggle');
+
+    toggles.forEach((toggle) => {
+      toggle.addEventListener('click', () => {
+        const panel = toggle.nextElementSibling;
+        const label = toggle.querySelector('span');
+        const icon = toggle.querySelector('.icon');
+        const isOpen = panel.classList.contains('open');
+
+        panel.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(!isOpen));
+        label.textContent = isOpen ? 'Show abstract' : 'Hide abstract';
+        icon.textContent = isOpen ? '+' : '−';
+      });
+    });
+
+    const sections = document.querySelectorAll('section[id], footer[id]');
+    const navLinks = document.querySelectorAll('.nav a');
+
+    const activateNav = () => {
+      let current = 'home';
+      sections.forEach((section) => {
+        const top = section.offsetTop - 120;
+        if (window.scrollY >= top) current = section.id;
+      });
+      navLinks.forEach((link) => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+      });
+    };
+
+    window.addEventListener('scroll', activateNav);
+    activateNav();
+  </script>
+</body>
+</html>
