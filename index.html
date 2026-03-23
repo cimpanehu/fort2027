@@ -117,7 +117,7 @@ Alongside lectures, the school emphasises active learning through tutorials, col
       </div>
 
       <div class="speakers-grid">
-        <div class="speaker-card">
+        <div class="speaker-card speaker-card--interactive" data-abstract-target="bazier-matte" tabindex="0" role="button" aria-label="Open abstract for Véronique Bazier-Matte">
           <div class="speaker-content">
             <h3><button class="speaker-name-button" type="button" data-abstract-target="bazier-matte">Prof. Véronique Bazier-Matte</button></h3>
             <div class="affiliation">Université Laval, CANADA</div>
@@ -125,7 +125,7 @@ Alongside lectures, the school emphasises active learning through tutorials, col
           </div>
         </div>
 
-        <div class="speaker-card">
+        <div class="speaker-card speaker-card--interactive" data-abstract-target="bossinger" tabindex="0" role="button" aria-label="Open abstract for Lara Bossinger">
           <div class="speaker-content">
             <h3><button class="speaker-name-button" type="button" data-abstract-target="bossinger">Prof. Lara Bossinger</button></h3>
             <div class="affiliation">Universidad Nacional Autónoma de México, MEXICO</div>
@@ -133,7 +133,7 @@ Alongside lectures, the school emphasises active learning through tutorials, col
           </div>
         </div>
 
-        <div class="speaker-card">
+        <div class="speaker-card speaker-card--interactive" data-abstract-target="hazrat" tabindex="0" role="button" aria-label="Open abstract for Roozbeh Hazrat">
           <div class="speaker-content">
             <h3><button class="speaker-name-button" type="button" data-abstract-target="hazrat">Prof. Roozbeh Hazrat</button></h3>
             <div class="affiliation">Western Sydney University, AUSTRALIA</div>
@@ -141,7 +141,7 @@ Alongside lectures, the school emphasises active learning through tutorials, col
           </div>
         </div>
 
-        <div class="speaker-card">
+        <div class="speaker-card speaker-card--interactive" data-abstract-target="kuber" tabindex="0" role="button" aria-label="Open abstract for Amit Kuber">
           <div class="speaker-content">
             <h3><button class="speaker-name-button" type="button" data-abstract-target="kuber">Prof. Amit Kuber</button></h3>
             <div class="affiliation">Indian Institute of Technology Kanpur, INDIA</div>
@@ -149,7 +149,7 @@ Alongside lectures, the school emphasises active learning through tutorials, col
           </div>
         </div>
 
-        <div class="speaker-card">
+        <div class="speaker-card speaker-card--interactive" data-abstract-target="lopes" tabindex="0" role="button" aria-label="Open abstract for Samuel Lopes">
           <div class="speaker-content">
             <h3><button class="speaker-name-button" type="button" data-abstract-target="lopes">Prof. Samuel Lopes</button></h3>
             <div class="affiliation">University of Porto, PORTUGAL</div>
@@ -158,7 +158,7 @@ Alongside lectures, the school emphasises active learning through tutorials, col
           </div>
         </div>
 
-        <div class="speaker-card">
+        <div class="speaker-card speaker-card--interactive" data-abstract-target="singla" tabindex="0" role="button" aria-label="Open abstract for Pooja Singla">
           <div class="speaker-content">
             <h3><button class="speaker-name-button" type="button" data-abstract-target="singla">Prof. Pooja Singla</button></h3>
             <div class="affiliation">Indian Institute of Technology Kanpur, INDIA</div>
@@ -166,7 +166,7 @@ Alongside lectures, the school emphasises active learning through tutorials, col
           </div>
         </div>
 
-        <div class="speaker-card">
+        <div class="speaker-card speaker-card--interactive" data-abstract-target="solotar" tabindex="0" role="button" aria-label="Open abstract for Andrea Solotar">
           <div class="speaker-content">
             <h3><button class="speaker-name-button" type="button" data-abstract-target="solotar">Prof. Andrea Solotar</button></h3>
             <div class="affiliation">University of Buenos Aires, ARGENTINA</div>
@@ -840,6 +840,7 @@ Alongside lectures, the school emphasises active learning through tutorials, col
   }
 
   const abstractButtons = document.querySelectorAll(".speaker-name-button");
+  const abstractTriggers = document.querySelectorAll(".speaker-card--interactive");
   const abstractItems = document.querySelectorAll(".abstract-item[data-abstract-id]");
   const abstractModal = document.getElementById("abstractModal");
   const abstractModalSpeaker = document.getElementById("abstractModalSpeaker");
@@ -883,9 +884,33 @@ Alongside lectures, the school emphasises active learning through tutorials, col
     document.body.classList.remove("modal-open");
   }
 
+  function triggerAbstractOpen(target) {
+    const abstractId = target?.dataset.abstractTarget;
+
+    if (!abstractId) {
+      return;
+    }
+
+    openAbstractModal(abstractId);
+  }
+
   abstractButtons.forEach(button => {
-    button.addEventListener("click", () => {
-      openAbstractModal(button.dataset.abstractTarget);
+    button.addEventListener("click", event => {
+      event.stopPropagation();
+      triggerAbstractOpen(button);
+    });
+  });
+
+  abstractTriggers.forEach(card => {
+    card.addEventListener("click", () => {
+      triggerAbstractOpen(card);
+    });
+
+    card.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        triggerAbstractOpen(card);
+      }
     });
   });
 
