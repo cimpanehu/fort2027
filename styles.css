@@ -1036,17 +1036,20 @@ footer {
   }
 
   .hero-arrow {
-    width: 40px;
-    height: 40px;
-    font-size: 1.5rem;
+    top: auto;
+    bottom: 74px;
+    width: 38px;
+    height: 38px;
+    font-size: 1.35rem;
+    transform: none;
   }
 
   .hero-arrow-left {
-    left: 12px;
+    left: 10px;
   }
 
   .hero-arrow-right {
-    right: 12px;
+    right: 10px;
   }
 }
 
