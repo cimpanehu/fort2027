@@ -1,715 +1,662 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CIMPA FoRT | Framework</title>
-  <style>
-    :root {
-      --green-dark: #123c32;
-      --green: #1f5f4a;
-      --orange: #d66a12;
-      --cream: #f8f6ef;
-      --white: #ffffff;
-      --text: #22302b;
-      --muted: #5c6b65;
-      --border: #e3d8c4;
-      --shadow: 0 12px 30px rgba(18, 60, 50, 0.08);
-      --radius: 18px;
-      --max: 1120px;
-    }
+  <title>CIMPA School | FoRT| NEHU 2027</title>
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: var(--cream);
-      color: var(--text);
-      line-height: 1.65;
-    }
-
-    a { color: inherit; text-decoration: none; }
-
-    .container {
-      width: min(var(--max), calc(100% - 32px));
-      margin: 0 auto;
-    }
-
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: rgba(248, 246, 239, 0.95);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .topbar-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      padding: 14px 0;
-    }
-
-    .brand small {
-      display: block;
-      font-size: 11px;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      color: var(--green);
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-
-    .brand strong { font-size: 18px; }
-
-    .nav {
-      display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .nav a:hover,
-    .nav a.active {
-      color: var(--orange);
-      font-weight: 700;
-    }
-
-    .hero {
-      background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 55%, var(--orange) 150%);
-      color: var(--white);
-      padding: 72px 0 58px;
-    }
-
-    .pill {
-      display: inline-block;
-      padding: 8px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.22);
-      background: rgba(255,255,255,0.08);
-      font-size: 13px;
-      margin-bottom: 18px;
-    }
-
-    .hero h1 {
-      margin: 0;
-      font-size: clamp(34px, 5vw, 58px);
-      line-height: 1.08;
-      max-width: 900px;
-    }
-
-    .hero p {
-      max-width: 760px;
-      color: rgba(255,255,255,0.9);
-      font-size: 18px;
-      margin: 18px 0 0;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 26px;
-    }
-
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 11px 18px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.25);
-      background: rgba(255,255,255,0.08);
-      color: var(--white);
-      font-size: 14px;
-      transition: 0.2s ease;
-      cursor: pointer;
-    }
-
-    .button.primary {
-      background: var(--white);
-      color: var(--green-dark);
-      border-color: var(--white);
-      font-weight: 700;
-    }
-
-    .button:hover {
-      transform: translateY(-1px);
-      background: rgba(255,255,255,0.14);
-    }
-
-    .button.primary:hover { background: #f2eee3; }
-
-    .section { padding: 64px 0; }
-
-    .section-title small {
-      display: block;
-      color: var(--orange);
-      text-transform: uppercase;
-      letter-spacing: 0.24em;
-      font-size: 11px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .section-title h2 {
-      margin: 0;
-      font-size: clamp(28px, 4vw, 40px);
-      line-height: 1.15;
-    }
-
-    .section-title p {
-      max-width: 760px;
-      color: var(--muted);
-      margin-top: 14px;
-    }
-
-    .quick-grid,
-    .lecture-grid,
-    .committee-grid,
-    .sponsor-grid {
-      display: grid;
-      gap: 22px;
-      margin-top: 30px;
-    }
-
-    .quick-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .lecture-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .committee-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .sponsor-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-
-    .card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 24px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 16px 36px rgba(18, 60, 50, 0.12);
-    }
-
-    .card h3 {
-      margin: 0;
-      font-size: 24px;
-      line-height: 1.25;
-      color: var(--green-dark);
-    }
-
-    .speaker {
-      margin-top: 14px;
-      font-weight: 700;
-      font-size: 17px;
-    }
-
-    .affiliation,
-    .email,
-    .meta,
-    .coming-soon {
-      color: var(--muted);
-      font-size: 14px;
-      margin-top: 4px;
-    }
-
-    .tag {
-      display: inline-block;
-      margin-top: 16px;
-      border-radius: 999px;
-      border: 1px solid #eadbc3;
-      background: #fbf7ef;
-      color: var(--orange);
-      padding: 7px 12px;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-weight: 700;
-    }
-
-    .toggle {
-      margin-top: 18px;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      border: 1px solid var(--border);
-      background: #fcfaf5;
-      color: var(--green-dark);
-      border-radius: 14px;
-      padding: 12px 14px;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .toggle:hover {
-      background: #f8f2e7;
-    }
-
-    .toggle .icon {
-      font-size: 18px;
-      line-height: 1;
-      transition: transform 0.2s ease;
-    }
-
-    .abstract-panel {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease;
-    }
-
-    .abstract-panel.open {
-      max-height: 420px;
-    }
-
-    .abstract-inner {
-      padding-top: 14px;
-      font-size: 15px;
-      color: var(--text);
-    }
-
-    .framework-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 22px;
-      margin-top: 30px;
-    }
-
-    .framework-list,
-    .person-list {
-      margin: 0;
-      padding-left: 18px;
-    }
-
-    .framework-list li,
-    .person-list li { margin: 10px 0; }
-
-    .person-list li strong {
-      color: var(--green-dark);
-    }
-
-    .committee-card h3,
-    .sponsor-card h3 {
-      font-size: 22px;
-    }
-
-    .footer {
-      background: var(--white);
-      border-top: 1px solid var(--border);
-      padding: 42px 0;
-    }
-
-    .footer p {
-      margin: 6px 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    @media (max-width: 980px) {
-      .framework-grid,
-      .quick-grid,
-      .lecture-grid,
-      .committee-grid,
-      .sponsor-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .topbar-inner {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .nav {
-        gap: 12px;
-        font-size: 13px;
-      }
-
-      .hero {
-        padding-top: 54px;
-      }
-
-      .section {
-        padding: 52px 0;
-      }
-
-      .card {
-        padding: 20px;
-      }
-    }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-  <header class="topbar">
-    <div class="container topbar-inner">
-      <div class="brand">
-        <small>CIMPA School</small>
-        <strong>Flavors of Representation Theory</strong>
+
+  <header>
+    <div class="container nav">
+      <div class="logo">
+        <span class="logo-top">CIMPA 2027</span>
+        <span class="logo-main">FoRT NEHU</span>
       </div>
-      <nav class="nav">
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#lectures">Lectures</a>
-        <a href="#committees">Committees</a>
-        <a href="#sponsors">Sponsors</a>
-        <a href="#contact">Contact</a>
-      </nav>
+
+      <button class="menu-toggle" id="menuToggle">&#9776;</button>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#speakers">Speakers</a></li>
+        <li><a href="#schedule">Schedule</a></li>
+        <li><a href="#registration">Registration</a></li>
+        <li><a href="#venue">Venue</a></li>
+        <li><a href="#committee">Committees</a></li>
+      </ul>
     </div>
   </header>
 
-  <section id="home" class="hero">
+ <section class="hero" id="home">
+  <div class="hero-carousel">
+  <div class="hero-slide active" 
+       style="background-image: url('https://nehu.ac.in/public/assets/photo_gallery/DJI_6664.jpg');"></div>
+
+  <div class="hero-slide" 
+       style="background-image: url('https://nehu.ac.in/public/assets/photo_gallery/DJI_6660.jpg');"></div>
+
+  <div class="hero-slide" 
+       style="background-image: url('https://nehu.ac.in/public/assets/photo_gallery/DJI_6672.jpg');"></div>
+</div>
+
+  <div class="hero-overlay"></div>
+
+  <div class="container hero-wrap">
+    <div class="hero-content">
+      <div class="hero-kicker">CIMPA School 2027</div>
+      <h1 class="hero-title-single">Flavors of Representation Theory</h1>
+
+      <div class="hero-meta">
+        <span>North-Eastern Hill University, Shillong</span>
+        <span>19 – 30 July 2027</span>
+      </div>
+
+      <div class="hero-buttons">
+        <a href="#registration" class="btn btn-primary">Registration</a>
+        <a href="#schedule" class="btn btn-secondary">Tentative Schedule</a>
+      </div>
+
+      <div class="hero-note">Applications and registration details will be announced here</div>
+    </div>
+  </div>
+
+  <button class="hero-arrow hero-arrow-left" id="prevSlide">&#10094;</button>
+  <button class="hero-arrow hero-arrow-right" id="nextSlide">&#10095;</button>
+
+  <div class="hero-dots" id="heroDots">
+    <span class="hero-dot active" data-slide="0"></span>
+    <span class="hero-dot" data-slide="1"></span>
+    <span class="hero-dot" data-slide="2"></span>
+  </div>
+</section>
+
+  <section class="section" id="about">
     <div class="container">
-      <div class="pill">North-Eastern Hill University, Shillong</div>
-      <h1>Basic website framework for the CIMPA FoRT school</h1>
-      <p>
-        This version keeps the site intentionally lean: a landing section, an about section,
-        a lectures section, committee details, sponsor placeholders, and contact details.
-        Abstracts are hidden by default and open only when clicked.
-      </p>
-      <div class="hero-actions">
-        <a class="button primary" href="#about">Explore framework</a>
-        <a class="button" href="#lectures">View lectures</a>
+      <div class="section-header">
+        <h2 class="section-title">About the School</h2>
+
+      </div>
+
+      <div class="about-content card">
+      <p> <strong>Flavors of Representation Theory (FoRT)</strong> is a two-week CIMPA School aimed at master's students, graduate students, and early-career researchers. 
+        It offers an introduction to key directions in modern representation theory through lectures, tutorials, collaborative problem sessions, and mentoring. 
+        The school builds on a series of preparatory initiatives, including <a href="https://iwlpa.github.io/iwlpa2025">IWLPA 2025</a>,  the <a href="https://sites.google.com/view/aesimnehu">AESIM School on Flavors of Representation Theory,</a> 
+        and is part of a broader effort to develop a sustained representation theory community at NEHU, 
+        across the North-East of India, and in neighboring regions. 
+      
+      </p> <p style="margin-top: 16px;"> The programme features <strong>six lecture series</strong> covering a range of active research areas, 
+          including cluster theory, infinite-dimensional Lie algebras, homological methods, combinatorial algebras, knot-theoretic interactions, functor categories, and group representations. 
+          It is structured around four foundational minicourses and three advanced lecture series, allowing participants to build essential background while gaining exposure to current research themes. 
+        
+      </p> <p style="margin-top: 16px;"> Beyond lectures, the school emphasizes <strong>active learning</strong> through tutorial sessions, collaborative jigsaw activities, Young Researchers’ Sessions, mentoring meetings, and guided research discussions. 
+          These components are designed to deepen conceptual understanding, promote mathematical communication, and foster sustained interaction among participants, lecturers, and early-career researchers. </p>
       </div>
     </div>
   </section>
 
-  <section id="about" class="section">
+  <section class="section" id="speakers">
     <div class="container">
-      <div class="section-title">
-        <small>About</small>
-        <h2>Current structure of the website</h2>
-        <p>
-          For now, the site is reduced to the essential academic skeleton. More detailed sections such as schedule,
-          registration, travel, accommodation, and organisers can be expanded later without rebuilding the layout.
+      <div class="section-header">
+        <h2 class="section-title">Lecturers and Scientific Programme</h2>
+        <p class="section-subtitle">
+          The school brings together six minicourses, supported by tutorials, collaborative sessions, and mentoring
+          activities.
         </p>
       </div>
 
-      <div class="quick-grid">
-        <article class="card">
-          <h3>Landing page</h3>
-          <p class="coming-soon">A clean entry section introducing the school and directing visitors to the key pages.</p>
-        </article>
-        <article class="card">
-          <h3>About page</h3>
-          <p class="coming-soon">A short overview of the school, its academic theme, and the present framework of the site.</p>
-        </article>
-        <article class="card">
-          <h3>Lectures page</h3>
-          <p class="coming-soon">Speaker cards with affiliations and click-to-open abstracts, keeping the page compact.</p>
-        </article>
-      </div>
+      <div class="speakers-grid">
+        <div class="speaker-card">
+          <div class="speaker-content">
+            <h3>Prof. Lara Bossinger</h3>
+            <div class="affiliation">Universidad Nacional Autónoma de México</div>
+            <p><strong>Course:</strong> Cluster structures on flag varieties and applications in particle physics</p>
+          </div>
+        </div>
 
-      <div class="framework-grid">
-        <article class="card">
-          <h3>What is included now</h3>
-          <ul class="framework-list">
-            <li>Home section with a concise introduction.</li>
-            <li>About section explaining the basic structure of the site.</li>
-            <li>Lecture cards with speaker details.</li>
-            <li>Expandable abstract panels for cleaner browsing.</li>
-            <li>Organising, scientific, and local committees.</li>
-            <li>Sponsors section at the end.</li>
-            <li>Simple contact block at the bottom.</li>
-          </ul>
-        </article>
+        <div class="speaker-card">
+          <div class="speaker-content">
+            <h3>Prof. Samuel Lopes</h3>
+            <div class="affiliation">University of Porto</div>
+            <p><strong>Course:</strong> Infinite-dimensional Lie algebras and their representations: an introduction
+              through examples</p>
+          </div>
+        </div>
 
-        <article class="card">
-          <h3>What can be added later</h3>
-          <ul class="framework-list">
-            <li>Registration and application links.</li>
-            <li>Detailed timetable and daily schedule.</li>
-            <li>Travel and accommodation information.</li>
-            <li>Organizing committee and partners.</li>
-            <li>Downloads, posters, and announcements.</li>
-          </ul>
-        </article>
+        <div class="speaker-card">
+          <div class="speaker-content">
+            <h3>Prof. Andrea Solotar</h3>
+            <div class="affiliation">University of Buenos Aires</div>
+            <p><strong>Course:</strong> Homological methods in Representation Theory</p>
+          </div>
+        </div>
+
+        <div class="speaker-card">
+          <div class="speaker-content">
+            <h3>Prof. Roozbeh Hazrat</h3>
+            <div class="affiliation">Western Sydney University</div>
+            <p><strong>Course:</strong> Representation theory for combinatorial algebras</p>
+          </div>
+        </div>
+
+        <div class="speaker-card">
+          <div class="speaker-content">
+            <h3>Prof. Véronique Bazier-Matte</h3>
+            <div class="affiliation">Université Laval</div>
+            <p><strong>Course:</strong> Representation theory and knots</p>
+          </div>
+        </div>
+
+        <div class="speaker-card">
+          <div class="speaker-content">
+            <h3>Prof. Amit Kuber</h3>
+            <div class="affiliation">Indian Institute of Technology Kanpur</div>
+            <p><strong>Course:</strong> Functor-category-theoretic methods in representation theory</p>
+          </div>
+        </div>
+
+        <div class="speaker-card">
+          <div class="speaker-content">
+            <h3>Prof. Pooja Singla</h3>
+            <div class="affiliation">Indian Institute of Technology Kanpur</div>
+            <p><strong>Course:</strong> Representation Theory of Groups</p>
+          </div>
+        </div>
+
+        <div class="speaker-card">
+          <div class="speaker-content">
+            <h3>Prof. Stéphane Launois</h3>
+            <div class="affiliation">University of Caen Normandie</div>
+            <p><strong>Role:</strong> External Co-organizer; coordination of tutorials, jigsaw sessions, mentoring
+              activities,
+              and complementary programme components.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="lectures" class="section">
+
+  <section class="section" id="schedule">
     <div class="container">
-      <div class="section-title">
-        <small>Lectures</small>
-        <h2>Teaching team and talk abstracts</h2>
+      <div class="section-header">
+        <h2 class="section-title">Tentative Schedule</h2>
+       
+      </div>
+
+      <div class="schedule-note">
+        <strong>Note:</strong> The school is a two-week programme comprising ten days of scientific activities.
+        The schedule shown here is tentative and subject to change.
+      </div>
+
+      <div class="schedule-block">
+        <h3 class="schedule-week-title">Week 1</h3>
+        <div class="schedule-table-wrap">
+          <table class="schedule-grid">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>9:00 - 9:30</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>9:30 - 10:30</td>
+                <td>Bossinger (L1)</td>
+                <td>Kuber (L2)</td>
+                <td>Lopes (L3)</td>
+                <td>Solotar (L4)</td>
+                <td>Kuber (L5)</td>
+              </tr>
+              <tr>
+                <td>10:30 - 10:40</td>
+                <td>Break</td>
+                <td>Break</td>
+                <td>Break</td>
+                <td>Break</td>
+                <td>Break</td>
+              </tr>
+              <tr>
+                <td>10:40 - 11:40</td>
+                <td>Solotar (L1)</td>
+                <td>Bossinger (L2)</td>
+                <td>Kuber (L3)</td>
+                <td>Lopes (L4)</td>
+                <td>Solotar (L5)</td>
+              </tr>
+              <tr>
+                <td>11:40 - 12:00</td>
+                <td>Tea Break</td>
+                <td>Tea Break</td>
+                <td>Tea Break</td>
+                <td>Tea Break</td>
+                <td>Tea Break</td>
+              </tr>
+              <tr>
+                <td>12:00 - 1:00</td>
+                <td>Lopes (L1)</td>
+                <td>Solotar (L2)</td>
+                <td>Solotar (L3)</td>
+                <td>Bossinger (L4)</td>
+                <td>Lopes (L5)</td>
+              </tr>
+              <tr>
+                <td>1:00 - 2:30</td>
+                <td>Lunch</td>
+                <td>Lunch</td>
+                <td>Lunch</td>
+                <td>Lunch</td>
+                <td>Lunch</td>
+              </tr>
+              <tr>
+                <td>2:30 - 3:30</td>
+                <td>Kuber (L1)</td>
+                <td>Lopes (L2)</td>
+                <td>Bossinger (L3)</td>
+                <td>Kuber (L4)</td>
+                <td>Bossinger (L5)</td>
+              </tr>
+              <tr>
+                <td>3:30 - 3:40</td>
+                <td>Break</td>
+                <td>Break</td>
+                <td>Break</td>
+                <td>Break</td>
+                <td>Break</td>
+              </tr>
+              <tr>
+                <td>3:40 - 4:40</td>
+                <td>YRS</td>
+                <td>Kuber (T)</td>
+                <td>Lopes (T)</td>
+                <td>Bossinger (T)</td>
+                <td>Solotar (T)</td>
+              </tr>
+              <tr>
+                <td>4:40 - 5:00</td>
+                <td></td>
+                <td>Tea Break</td>
+                <td>Tea Break</td>
+                <td>Tea Break</td>
+                <td>Tea Break</td>
+              </tr>
+              <tr>
+                <td>5:00 - 6:00</td>
+                <td>Opening Social and Snacks</td>
+
+                <td>YRS</td>
+                <td>Jigsaw</td>
+                <td>Jigsaw</td>
+                <td>Jigsaw</td>
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="schedule-block" style="margin-top: 34px;">
+        <h3 class="schedule-week-title">Week 2</h3>
+        <div class="schedule-table-wrap">
+          <table class="schedule-grid">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>9:30 - 10:30</td>
+                <td>Hazrat (L1)</td>
+                <td>Singla (L2)</td>
+                <td>Bazier-Matte (L3)</td>
+                <td>Hazrat (L4)</td>
+                <td>Singla (L5)</td>
+              </tr>
+              <tr>
+                <td>10:30 - 10:40</td>
+                <td>Break</td>
+                <td>Break</td>
+                <td>Break</td>
+                <td>Break</td>
+                <td>Break</td>
+              </tr>
+              <tr>
+                <td>10:40 - 11:40</td>
+                <td>Bazier-Matte (L1)</td>
+                <td>Hazrat (L2)</td>
+                <td>Singla (L3)</td>
+                <td>Bazier-Matte (L4)</td>
+                <td>Hazrat (L5)</td>
+              </tr>
+              <tr>
+                <td>11:40 - 12:00</td>
+                <td>Tea Break</td>
+                <td>Tea Break</td>
+                <td>Tea Break</td>
+                <td>Tea Break</td>
+                <td>Tea Break</td>
+              </tr>
+              <tr>
+                <td>12:00 - 1:00</td>
+                <td>Singla (L1)</td>
+                <td>Bazier-Matte (L2)</td>
+                <td>Hazrat (L3)</td>
+                <td>Singla (L4)</td>
+                <td>Bazier-Matte (L5)</td>
+              </tr>
+              <tr>
+                <td>1:00 - 2:30</td>
+                <td>Lunch</td>
+                <td>Lunch</td>
+                <td>Lunch</td>
+                <td>Lunch</td>
+                <td>Lunch</td>
+              </tr>
+              <tr>
+                <td>2:30 - 3:30</td>
+                <td>Research Talk</td>
+                <td>YRS</td>
+                <td>Day Trip</td>
+                <td>Research Talk</td>
+                <td>Singla (T)</td>
+              </tr>
+              <tr>
+                <td>3:30 - 3:40</td>
+                <td>Break</td>
+                <td>Break</td>
+                <td></td>
+                <td>Break</td>
+                <td>Break</td>
+              </tr>
+              <tr>
+                <td>3:40 - 4:40</td>
+                <td>YRS</td>
+                <td>Hazrat (T)</td>
+                <td></td>
+                <td>Bazier-Matte (T)</td>
+                <td>Jigsaw</td>
+
+              </tr>
+              <tr>
+                <td>4:40 - 5:00</td>
+                <td>Tea Break</td>
+                <td>Tea Break</td>
+                <td></td>
+                <td>Tea Break</td>
+                <td>Closing and Snacks</td>
+              </tr>
+              <tr>
+                <td>5:00 - 6:00</td>
+                <td>Jigsaw</td>
+                <td>Jigsaw</td>
+                <td></td>
+                <td>Jigsaw</td>
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- <div class="schedule-note" style="margin-top: 26px;">
+  <strong>Additional Activities:</strong> The programme also includes mentoring sessions, outreach to nearby colleges, 
+  group discussions and debates, research talks, and a range of cultural and social events, including a field trip and a 
+  visit to the Shillong Museum. These activities are integrated into the school to encourage interaction, 
+  collaboration, and community building among participants.
+</div> -->
+    </div>
+  </section>
+
+
+
+  <section class="section" id="registration">
+    <div class="container">
+      <div class="registration-box">
+        <h3>Registration</h3>
         <p>
-          Click on any lecture card to open or close the abstract.
+          The school is intended for Master's students, PhD students, postdoctoral researchers, and early-career faculty
+          interested in representation theory and related areas.
+        </p>
+        <a href="#" class="btn btn-primary">Form Coming Soon</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="venue">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Venue & Travel</h2>
+        <p class="section-subtitle">
+          The school will be hosted at North-Eastern Hill University, Shillong, Meghalaya, India.
         </p>
       </div>
 
-      <div class="lecture-grid">
-        <article class="card lecture-card">
-          <h3>Cluster structures on flag varieties and applications in particle physics</h3>
-          <div class="speaker">Lara Bossinger</div>
-          <div class="affiliation">Universidad Nacional Autónoma de México (UNAM)</div>
-          <div class="email">lara@im.unam.mx</div>
-          <div class="meta">Lecture series · 5h</div>
-          <button class="toggle" type="button" aria-expanded="false">
-            <span>Show abstract</span>
-            <span class="icon">+</span>
-          </button>
-          <div class="abstract-panel">
-            <div class="abstract-inner">
-              These lectures cover total positivity, an introduction to cluster algebras,
-              cluster structures on partial flag varieties, realizations of configuration
-              spaces in quantum field theory as partial flag varieties, and applications of
-              cluster structures to scattering amplitudes.
-            </div>
-          </div>
-          <div class="tag">Introductory course</div>
-        </article>
+      <div class="venue-grid">
+        <div class="card">
+          <h3>Venue</h3>
+          <p><strong>Science Classroom Cluster</strong></p>
+          <p>North-Eastern Hill University</p>
+          <p>Umshing Mawkynroh, Shillong, Meghalaya 793022, India</p>
 
-        <article class="card lecture-card">
-          <h3>Infinite-dimensional Lie algebras and their representations: an introduction through examples</h3>
-          <div class="speaker">Samuel Lopes</div>
-          <div class="affiliation">University of Porto</div>
-          <div class="email">slopes@fc.up.pt</div>
-          <div class="meta">Lecture series · 5h</div>
-          <button class="toggle" type="button" aria-expanded="false">
-            <span>Show abstract</span>
-            <span class="icon">+</span>
-          </button>
-          <div class="abstract-panel">
-            <div class="abstract-inner">
-              This course introduces structural features and aspects of the representation
-              theory of infinite-dimensional Lie algebras through examples such as the
-              Heisenberg Lie algebra, the Virasoro Lie algebra, Bosonic Fock space,
-              the Boson-Fermion correspondence, and Lie algebras of infinite matrices
-              including gl(infinity) and sl(infinity).
-            </div>
-          </div>
-          <div class="tag">Introductory course</div>
-        </article>
+          <p style="margin-top: 14px;">
+            The school will be held at the Mathematics Section of the Science Cluster Classroom Building at NEHU.
+            The venue is equipped with lecture halls and seminar rooms with blackboard and smart-board facilities,
+            along with campus-wide Wi-Fi, and access to university services and local transport.
+          </p>
 
-        <article class="card lecture-card">
-          <h3>Homological methods in Representation Theory</h3>
-          <div class="speaker">Andrea Solotar</div>
-          <div class="affiliation">University of Buenos Aires</div>
-          <div class="email">asolotar@dm.uba.ar</div>
-          <div class="meta">Lecture series · 5h</div>
-          <button class="toggle" type="button" aria-expanded="false">
-            <span>Show abstract</span>
-            <span class="icon">+</span>
-          </button>
-          <div class="abstract-panel">
-            <div class="abstract-inner">
-              This course presents recent progress on Han's conjecture and introduces
-              homological tools such as Hochschild cohomology and homology, global
-              dimension, and triangulated and derived categories. It also discusses newer
-              methods used in this area, in particular tau-Hochschild cohomology.
-            </div>
-          </div>
-          <div class="tag">Introductory course</div>
-        </article>
 
-        <article class="card lecture-card">
-          <h3>Representation theory for combinatorial algebras</h3>
-          <div class="speaker">Roozbeh Hazrat</div>
-          <div class="affiliation">Western Sydney University</div>
-          <div class="email">r.hazrat@westernsydney.edu.au</div>
-          <div class="meta">Lecture series · 5h</div>
-          <button class="toggle" type="button" aria-expanded="false">
-            <span>Show abstract</span>
-            <span class="icon">+</span>
-          </button>
-          <div class="abstract-panel">
-            <div class="abstract-inner">
-              The lectures focus on representation theory for combinatorial algebras arising
-              from graph-type constructions, especially higher-rank graph analogues of
-              Leavitt path algebras, together with their irreducible representations and
-              links with symbolic dynamics.
-            </div>
-          </div>
-          <div class="tag">Introductory course</div>
-        </article>
+        </div>
 
-        <article class="card lecture-card">
-          <h3>Representation theory and knots</h3>
-          <div class="speaker">Véronique Bazier-Matte</div>
-          <div class="affiliation">Université Laval</div>
-          <div class="email">veronique.bazier-matte.1@ulaval.ca</div>
-          <div class="meta">Lecture series · 5h</div>
-          <button class="toggle" type="button" aria-expanded="false">
-            <span>Show abstract</span>
-            <span class="icon">+</span>
-          </button>
-          <div class="abstract-panel">
-            <div class="abstract-inner">
-              This course studies a connection between knot theory and cluster algebras via
-              representation theory. It explains how knot and link diagrams give rise to
-              cluster structures, relates these to Alexander polynomials and Kauffman states,
-              and examines compatible cluster variables and symmetry phenomena.
-            </div>
-          </div>
-          <div class="tag">Advanced course</div>
-        </article>
-
-        <article class="card lecture-card">
-          <h3>Functor-category-theoretic methods in representation theory</h3>
-          <div class="speaker">Amit Kuber</div>
-          <div class="affiliation">Indian Institute of Technology Kanpur</div>
-          <div class="email">askuber@iitk.ac.in</div>
-          <div class="meta">Lecture series · 5h</div>
-          <button class="toggle" type="button" aria-expanded="false">
-            <span>Show abstract</span>
-            <span class="icon">+</span>
-          </button>
-          <div class="abstract-panel">
-            <div class="abstract-inner">
-              This course gives a gentle introduction to functor categories and their use in
-              the representation theory of bound quivers. Topics include algebraically compact
-              modules, Serre localisation, Krull-Gabriel dimension, duality, Ziegler spectrum,
-              and definable categories.
-            </div>
-          </div>
-          <div class="tag">Advanced course</div>
-        </article>
-
-        <article class="card lecture-card">
-          <h3>Representation Theory of Groups</h3>
-          <div class="speaker">Pooja Singla</div>
-          <div class="affiliation">Indian Institute of Technology Kanpur</div>
-          <div class="email">psingla@iitk.ac.in</div>
-          <div class="meta">Lecture series · 5h</div>
-          <button class="toggle" type="button" aria-expanded="false">
-            <span>Show abstract</span>
-            <span class="icon">+</span>
-          </button>
-          <div class="abstract-panel">
-            <div class="abstract-inner">
-              These lectures begin with representations, group algebras, irreducibility,
-              character theory, induction, restriction, Mackey theory, and Clifford theory.
-              They then move to irreducible representations of GLn(Fq), including cuspidal
-              and principal series representations, and finally to smooth admissible
-              representations over p-adic fields, parabolic induction, and the Bernstein decomposition.
-            </div>
-          </div>
-          <div class="tag">Advanced course</div>
-        </article>
+        <div class="map-box">
+          <iframe src="https://www.google.com/maps?q=North-Eastern%20Hill%20University%20Shillong&output=embed"
+            loading="lazy" allowfullscreen>
+          </iframe>
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="committees" class="section">
+  <section class="section" id="committee">
     <div class="container">
-      <div class="section-title">
-        <small>Committees</small>
-        <h2>Organisational structure</h2>
-        <p>
-          These blocks can be filled out as names are finalized. For now, they provide the right public-facing structure.
+      <div class="section-header">
+        <h2 class="section-title">Committees</h2>
+        <p class="section-subtitle">
+        
         </p>
       </div>
 
-      <div class="committee-grid">
-        <article class="card committee-card">
-          <h3>Organising Committee</h3>
-          <ul class="person-list">
-            <li><strong>Ardeline Mary Buhphang</strong> — North-Eastern Hill University</li>
-            <li><strong>Stéphane Launois</strong> — University of Caen Normandie</li>
-            <li><strong>Rishabh Goswami</strong> — North-Eastern Hill University</li>
-            <li><strong>Alfilgen Sebandal</strong> — Research Center for Theoretical Physics, Jagna</li>
-          </ul>
-        </article>
+      <!-- Organizers Subsection -->
+      <div style="margin-bottom: 60px;">
+        <h3 style="font-size: 1.5rem; color: var(--primary); margin-bottom: 30px; text-align: center;">Organizing
+          Committee</h3>
+        <div class="organizers-grid">
+          <div class="organizer-card">
+            <h3>Dr. Ardeline Mary Buhphang</h3>
+            <p>North-Eastern Hill University</p>
+            <p>Email: <a href="mailto:ardeline@nehu.ac.in">ardeline@nehu.ac.in</a></p>
+          </div>
 
-        <article class="card committee-card">
-          <h3>Scientific Committee</h3>
-          <ul class="person-list">
-            <li><strong>To be updated</strong> — Chair / coordinator</li>
-            <li><strong>To be updated</strong> — International member</li>
-            <li><strong>To be updated</strong> — National member</li>
-            <li><strong>To be updated</strong> — Advisory member</li>
-          </ul>
-        </article>
+          <div class="organizer-card">
+            <h3>Prof. Stéphane Launois</h3>
+            <p>University of Caen Normandie</p>
+            <p>Email: <a href="mailto:stephane.launois@unicaen.fr">stephane.launois@unicaen.fr</a></p>
+          </div>
 
-        <article class="card committee-card">
-          <h3>Local Organising Committee</h3>
-          <ul class="person-list">
-            <li><strong>To be updated</strong> — Department of Mathematics, NEHU</li>
-            <li><strong>To be updated</strong> — Logistics and hospitality</li>
-            <li><strong>To be updated</strong> — Student coordination</li>
-            <li><strong>To be updated</strong> — Venue and local support</li>
-          </ul>
-        </article>
+          <div class="organizer-card">
+            <h3>Rishabh Goswami</h3>
+            <p>North-Eastern Hill University</p>
+            <p>Email: <a href="mailto:rishabhgoswami.math@gmail.com">rishabhgoswami.math@gmail.com</a></p>
+          </div>
+
+          <div class="organizer-card">
+            <h3>Dr. Alfilgen Sebandal</h3>
+            <p>Research Center for Theoretical Physics, Jagna, Bohol</p>
+            <p>Email: <a href="mailto:a.sebandal@rctpjagna.com">a.sebandal@rctpjagna.com</a></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Local Organising Committee Subsection -->
+      <div style="margin-bottom: 60px;">
+        <h3 style="font-size: 1.5rem; color: var(--primary); margin-bottom: 30px; text-align: center;">Local Organizing
+          Committee</h3>
+        <div class="organizers-grid">
+          <div class="organizer-card">
+            
+            <p>Details about local committee members will be updated soon.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scientific Committee Subsection -->
+      <div>
+        <h3 style="font-size: 1.5rem; color: var(--primary); margin-bottom: 30px; text-align: center;">Scientific
+          Committee</h3>
+        <div class="organizers-grid">
+          <div class="organizer-card">
+           
+            <p>Details about scientific committee members will be updated soon.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="sponsors" class="section">
+  <!-- <section class="section" id="contact">
     <div class="container">
-      <div class="section-title">
-        <small>Sponsors</small>
-        <h2>Funding and institutional support</h2>
-        <p>
-          Keep this section at the end for funding acknowledgements and partner visibility. Logos and links can be added once confirmed.
+      <div class="section-header">
+        <h2 class="section-title">Contact</h2>
+        <p class="section-subtitle">
+          For registration queries, travel support, or academic information, please use the official contact.
         </p>
       </div>
 
-      <div class="sponsor-grid">
-        <article class="card sponsor-card">
-          <h3>Primary sponsor</h3>
-          <p class="coming-soon">CIMPA</p>
-        </article>
-        <article class="card sponsor-card">
-          <h3>Host institution</h3>
-          <p class="coming-soon">North-Eastern Hill University, Shillong</p>
-        </article>
+      <div class="card contact-card">
+        <h3>Get in Touch</h3>
+        <p>For any inquiries regarding registration, travel support, or academic information, please contact us:</p>
+        <p style="margin-top: 20px; font-size: 1.1rem;">
+          <strong>Email:</strong> <a href="mailto:cimpa.nehu@gmail.com">cimpa.nehu@gmail.com</a>
+        </p>
       </div>
-    </div>
-  </section>
+    </div> -->
 
-  <footer id="contact" class="footer">
-    <div class="container">
-      <div class="section-title">
-        <small>Contact</small>
-        <h2 style="font-size: 30px;">Current contact block</h2>
+  <footer>
+    <div class="container footer-content">
+      <div>
+        <strong>CIMPA School: Flavors of Representation Theory</strong><br>
+        Hosted by North-Eastern Hill University, Shillong
       </div>
-      <p>North-Eastern Hill University, Shillong</p>
-      <p>CIMPA School: Flavors of Representation Theory</p>
-      <p>More organiser and logistics details can be added here later.</p>
+      <div>
+        For more details reach at <a href="mailto:cimpa.nehu@gmail.com">cimpa.nehu@gmail.com</a>
+      </div>
     </div>
   </footer>
+<script>
+  const menuToggle = document.getElementById("menuToggle");
+  const navLinks = document.getElementById("navLinks");
 
-  <script>
-    const toggles = document.querySelectorAll('.toggle');
+  menuToggle.addEventListener("click", () => {
+    navLinks.classList.toggle("show");
+  });
 
-    toggles.forEach((toggle) => {
-      toggle.addEventListener('click', () => {
-        const panel = toggle.nextElementSibling;
-        const label = toggle.querySelector('span');
-        const icon = toggle.querySelector('.icon');
-        const isOpen = panel.classList.contains('open');
+  document.querySelectorAll(".nav-links a").forEach(link => {
+    link.addEventListener("click", () => {
+      navLinks.classList.remove("show");
+    });
+  });
 
-        panel.classList.toggle('open');
-        toggle.setAttribute('aria-expanded', String(!isOpen));
-        label.textContent = isOpen ? 'Show abstract' : 'Hide abstract';
-        icon.textContent = isOpen ? '+' : '−';
+  const slides = document.querySelectorAll(".hero-slide");
+  const dots = document.querySelectorAll(".hero-dot");
+  const prevBtn = document.getElementById("prevSlide");
+  const nextBtn = document.getElementById("nextSlide");
+
+  let currentSlide = 0;
+  let slideInterval;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle("active", i === index);
+    });
+
+    dots.forEach((dot, i) => {
+      dot.classList.toggle("active", i === index);
+    });
+
+    currentSlide = index;
+  }
+
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    showSlide(currentSlide);
+  }
+
+  function prevSlideFn() {
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    showSlide(currentSlide);
+  }
+
+  function startCarousel() {
+    slideInterval = setInterval(nextSlide, 5000);
+  }
+
+  function resetCarousel() {
+    clearInterval(slideInterval);
+    startCarousel();
+  }
+
+  if (prevBtn && nextBtn && slides.length > 0) {
+    nextBtn.addEventListener("click", () => {
+      nextSlide();
+      resetCarousel();
+    });
+
+    prevBtn.addEventListener("click", () => {
+      prevSlideFn();
+      resetCarousel();
+    });
+
+    dots.forEach(dot => {
+      dot.addEventListener("click", () => {
+        const index = Number(dot.dataset.slide);
+        showSlide(index);
+        resetCarousel();
       });
     });
 
-    const sections = document.querySelectorAll('section[id], footer[id]');
-    const navLinks = document.querySelectorAll('.nav a');
+    showSlide(0);
+    startCarousel();
+  }
+</script>
 
-    const activateNav = () => {
-      let current = 'home';
-      sections.forEach((section) => {
-        const top = section.offsetTop - 120;
-        if (window.scrollY >= top) current = section.id;
-      });
-      navLinks.forEach((link) => {
-        link.classList.toggle('active', link.getAttribute('href') === '#' + current);
-      });
-    };
-
-    window.addEventListener('scroll', activateNav);
-    activateNav();
-  </script>
 </body>
+
+
+
 </html>
