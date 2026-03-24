@@ -141,8 +141,22 @@ header {
 }
 
 .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   line-height: 1.05;
   color: var(--primary);
+}
+
+.logo-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.logo-text {
+  display: block;
 }
 
 .logo-top {
