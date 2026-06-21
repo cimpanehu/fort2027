@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450" role="img" aria-labelledby="title">
+  <title>Restaurant placeholder image</title>
+  <rect width="800" height="450" fill="#eef3f0"/>
+  <rect x="40" y="40" width="720" height="370" rx="28" ry="28" fill="#d8e2de"/>
+  <path d="M80 130h640v42H80zM80 210h520v42H80zM80 290h400v42H80z" fill="#b3c1bd"/>
+  <circle cx="640" cy="215" r="48" fill="#b3c1bd"/>
+  <text x="400" y="255" font-family="Inter, Arial, sans-serif" font-size="34" fill="#61706b" text-anchor="middle">Image Placeholder</text>
+</svg>

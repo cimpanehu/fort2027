@@ -55,7 +55,15 @@ a {
 
 .section {
   position: relative;
-  padding: var(--section-space) 0;
+  padding: 36px 0 var(--section-space);
+}
+
+section#committee {
+  padding-bottom: 10px;
+}
+
+section#sponsors {
+  padding-top: 0;
 }
 
 .section-badge {
@@ -251,26 +259,20 @@ header {
 }
 
 .hero-content {
+  position: relative;
+  z-index: 2;
   max-width: 1000px;
   margin: 0 auto;
   text-align: center;
 }
 
+
 .hero-banner-logo {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 16px;
-  padding: 12px 18px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 12px 28px rgba(6, 22, 20, 0.22);
+  display: none;
 }
 
-.hero-banner-logo img {
-  width: min(320px, 68vw);
-  height: auto;
+.cimpa-school-btn {
+  display: none;
 }
 
 .hero-kicker {
@@ -284,6 +286,20 @@ header {
   font-size: 0.84rem;
   font-weight: 800;
   letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero-badge {
+  display: inline-block;
+  margin-bottom: 16px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: rgba(15, 76, 69, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
@@ -922,21 +938,41 @@ body.modal-open {
   margin: 0 auto;
 }
 
+.registration-link {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: underline;
+  transition: 0.25s ease;
+}
+
+.registration-link:hover {
+  color: #f4c856;
+  text-decoration-thickness: 2px;
+}
+
+/* Visa & Travel */
+#visa {
+  padding-top: 28px;
+}
+
+#how-to-reach {
+  padding-top: 28px;
+}
+
 /* Venue */
-#venue {
+#lecture-hall {
   position: relative;
   margin-bottom: 60px;
-  background:
-    linear-gradient(135deg, rgba(15, 76, 69, 0.8), rgba(31, 122, 104, 0.75)),
-    url("https://nehu.ac.in/public/assets/photo_gallery/IMG_0527.jpg") center / cover no-repeat;
+  padding-top: 28px;
+  background: transparent;
 }
 
-#venue .section-title {
-  color: var(--white);
+#lecture-hall .section-title {
+  color: var(--primary);
 }
 
-#venue .section-subtitle {
-  color: rgba(255, 255, 255, 0.85);
+#lecture-hall .section-subtitle {
+  color: var(--muted);
 }
 
 .venue-grid {
@@ -952,6 +988,99 @@ body.modal-open {
   border: 0;
   border-radius: 22px;
   box-shadow: var(--shadow-sm);
+}
+
+/* Accommodation */
+#accommodation {
+  position: relative;
+  background: transparent;
+  padding-bottom: 18px;
+}
+
+#meals {
+  padding-top: 18px;
+}
+
+#accommodation .section-title {
+  color: var(--primary);
+}
+
+#accommodation .section-subtitle {
+  color: var(--muted);
+}
+
+.guesthouse-image {
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  margin-top: 20px;
+}
+
+.guesthouse-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+}
+
+.guesthouse-image::after {
+  content: attr(data-caption);
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 18px 22px;
+  background: rgba(15, 76, 69, 0.75);
+  color: var(--white);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.restaurant-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.restaurant-card {
+  padding: 20px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: var(--shadow-sm);
+}
+
+.restaurant-card h4 {
+  margin-top: 18px;
+  margin-bottom: 12px;
+  font-size: 1.05rem;
+  color: var(--primary);
+}
+
+.restaurant-card p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.restaurant-image {
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  margin-top: 16px;
+  min-height: 180px;
+  background: rgba(15, 76, 69, 0.08);
+}
+
+.restaurant-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* Committees */
@@ -979,6 +1108,58 @@ body.modal-open {
   margin-bottom: 6px;
   font-size: 0.96rem;
   color: var(--muted);
+}
+
+/* Sponsors */
+.sponsors-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+.sponsor-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  width: 240px;
+  height: 140px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sponsor-link:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.sponsor-logo {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.cimpa-logo,
+.nehu-logo {
+  width: auto;
+  height: auto;
+}
+
+@media (max-width: 760px) {
+  .sponsors-grid {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+  }
 }
 
 /* Contact */
@@ -1028,7 +1209,8 @@ footer {
   }
 
   .highlights-grid,
-  .speakers-grid {
+  .speakers-grid,
+  .sponsors-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
@@ -1161,4 +1343,18 @@ footer {
   .abstract-modal__speaker {
     font-size: 1.6rem;
   }
+}
+
+
+.travel-note { margin-top: 18px; padding: 20px 22px; 
+  background: linear-gradient( 135deg, rgba(244, 226, 181, 0.75), rgba(255, 255, 255, 0.92) );
+   border: 1px solid rgba(217, 164, 65, 0.35); border-left: 6px solid var(--accent); border-radius: 20px; 
+   box-shadow: var(--shadow-sm); } .travel-note h4 { margin-bottom: 10px; color: var(--primary); font-size: 1.05rem; 
+    font-weight: 800; } .travel-note ul { display: grid; gap: 8px; margin-top: 10px; padding-left: 20px; }
+.travel-note li { color: var(--dark); } .travel-note strong { color: var(--primary); }
+
+/* Active page in multi-page navigation */
+.nav-links a.active,
+.nav-links a[aria-current="page"] {
+  color: var(--primary);
 }
